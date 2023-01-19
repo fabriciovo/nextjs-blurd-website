@@ -19,7 +19,7 @@ export default function Home() {
               <Image src={'/images/blurd.png'} alt='blurd' width={256} height={256} />
             </div>
             <StyledVideo url='NpEaa2P7qZI' />
-            <button>Login</button>
+            <button>a</button>
           </div>
         </div>
       </main>
