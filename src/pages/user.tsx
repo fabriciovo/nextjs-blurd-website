@@ -1,6 +1,11 @@
+import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Head from 'next/head'
+import { NextResponse } from "next/server";
 
-export default function profile() {
+
+const User: NextPage = (): JSX.Element => {
+  const { status, data } = useSession();
   return (
     <>
       <Head>
@@ -10,8 +15,11 @@ export default function profile() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className='h-screen w-screen'>
-            Profile
+        Profile
+        {JSON.stringify(data?.user, null, 2)}
       </main>
     </>
   )
 }
+
+export default User;
