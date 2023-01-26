@@ -18,7 +18,7 @@ export default function Home() {
             <div className='md:col-span-2'>
               <Image src={'/images/blurd.png'} alt='blurd' width={256} height={256} />
             </div>
-            <StyledVideo url='NpEaa2P7qZI' />
+           
             <button>a</button>
           </div>
         </div>
