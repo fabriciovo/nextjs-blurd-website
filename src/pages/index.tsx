@@ -1,6 +1,7 @@
 import StyledVideo from '@/components/StyledVideo'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -12,16 +13,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className='h-screen w-screen'>
-        <div className='w-full h-full'>
-          <div className='grid xs:grid-cols-1 md:grid-cols-2 gap-4 place-items-center p-20
-          '>
-            <div className='md:col-span-2'>
-              <Image src={'/images/blurd.png'} alt='blurd' width={256} height={256} />
-            </div>
-           
-            <button>a</button>
-          </div>
-        </div>
+        <h1 className='text-9xl'>home page</h1>
+        <Link href={"/login"}>Login </Link>
       </main>
     </>
   )
