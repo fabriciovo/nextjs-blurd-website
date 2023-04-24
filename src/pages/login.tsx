@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import { FormEventHandler, useContext, useEffect, useState } from 'react'
-import { auth, authEmailProvider } from '../lib/firebase';
+import { auth, authEmailProvider, db } from '../lib/firebase';
 import Layout from '@/layout/Layout';
 import { UserContext } from '@/contexts/userContext';
-import { IUser } from '@/interface';
+import { IGMUsers, IUser } from '@/interface';
 
 
 export default function Home() {
@@ -34,22 +34,32 @@ export default function Home() {
       username === ""
     ) {
       setErrorMessage("All fields must be filled");
-      setLoading(false);
       return;
     }
     if (password !== confirmPassword) {
       setErrorMessage("password not matched");
-      setLoading(false);
       return;
     }
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .catch((error) => {
-        // showErrorMessage = true;
-        // errorMessage = error.message;
-      })
-      .finally(() => {
-      });
+    try {
+      const data = await auth.createUserWithEmailAndPassword(email, password);
+      const GMdata: IGMUsers = {
+        beta_tester: false,
+        first_login: false,
+        coins: 0,
+        total_coins: 0,
+        coins_per_second: 0,
+        collectables: "{}",
+        craft_items: "{}",
+        quests: "{}",
+        secret_items: "{}",
+        shop_items: "{}",
+        upgrades: "{}",
+      };
+      await db.collection('Users').doc(`user: ${data?.user?.uid}`).set(GMdata);
+      console.log('User data saved successfully!');
+    } catch (error) {
+      console.error('Error saving user data: ', error);
+    }
   }
 
   const singIn = async () => {
