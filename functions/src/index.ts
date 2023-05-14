@@ -22,7 +22,7 @@ export const userDocument = functions.auth.user().onCreate(async (user) => {
             craft_items: "{}",
             quests: "{}",
             secret_items: "{}",
-            shop_items: "{}",
+            foods: "{}",
             upgrades: "{}",
             game_signin: admin.firestore.FieldValue.serverTimestamp(),
             game_logout: null
