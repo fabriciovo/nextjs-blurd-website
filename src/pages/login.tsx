@@ -42,20 +42,7 @@ export default function Home() {
     }
     try {
       const data = await auth.createUserWithEmailAndPassword(email, password);
-      const GMdata: IGMUsers = {
-        beta_tester: false,
-        first_login: false,
-        coins: 0,
-        total_coins: 0,
-        coins_per_second: 0,
-        collectables: "{}",
-        craft_items: "{}",
-        quests: "{}",
-        secret_items: "{}",
-        shop_items: "{}",
-        upgrades: "{}",
-      };
-      await db.collection('Users').doc(`user: ${data?.user?.uid}`).set(GMdata);
+
       console.log('User data saved successfully!');
     } catch (error) {
       console.error('Error saving user data: ', error);
