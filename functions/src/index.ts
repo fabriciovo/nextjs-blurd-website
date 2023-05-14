@@ -7,21 +7,10 @@ const db = admin.firestore();
 
 export const userDocument = functions.auth.user().onCreate(async (user) => {
     const { uid } = user;
+      const userRef = admin.firestore().collection('users').doc(uid);
+      const userSnapshot = await userRef.get();
 
-    if (user.metadata.creationTime === user.metadata.lastSignInTime) {
-        // Ação para novo usuário (criação de documento no Firestore, etc.)
-        const userRef = db.collection('users').doc(uid);
-        return userRef.update({ game_signin: admin.firestore.FieldValue.serverTimestamp() })
-            .then(() => {
-                console.log('Campo "game_signin" atualizado para usuário:', uid);
-                return null;
-            })
-            .catch((error: Error) => {
-                console.error('Erro ao atualizar campo "game_signin" para usuário:', uid, error);
-                throw error;
-            });
-
-      } else {
+      if (!userSnapshot.exists) {
         const GMdata = {
             beta_tester: false,
             first_login: false,
@@ -39,7 +28,11 @@ export const userDocument = functions.auth.user().onCreate(async (user) => {
             game_logout: null
         };
         db.collection('Users').doc(`${user?.uid}`).set(GMdata);
+        console.log('Dados do usuário criados no Firestore');
+      } else {
+        console.log('Os dados do usuário já existem no Firestore');
       }
+
 
     return null;
 })
